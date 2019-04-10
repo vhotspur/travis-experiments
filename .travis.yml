@@ -3,13 +3,12 @@ dist: trusty
 language: java
 
 refs:
-  - &compile
-    stage: compile
+  - &bundle
+    stage: bundle
     script:
       - ant
-      - ant example
-  - &show
-    stage: show
+  - &bench
+    stage: benchmark
     jdk: openjdk8
     script:
       - ant
@@ -18,35 +17,36 @@ refs:
 jobs:
   include:
     - stage: prepare
-      name: "Set-up"
+      name: "Basic checks"
       script:
         - ant print-properties
+        - ant example
 
-    - <<: *compile
+    - <<: *bundle
       os: osx
-    - <<: *compile
+    - <<: *bundle
       jdk: openjdk7
-    - <<: *compile
+    - <<: *bundle
       jdk: openjdk8
-    - <<: *compile
+    - <<: *bundle
       jdk: oraclejdk8
-    - <<: *compile
+    - <<: *bundle
       jdk: oraclejdk9
-    - <<: *compile
+    - <<: *bundle
       jdk: oraclejdk11
 
-    - <<: *show
+    - <<: *bench
       env: PROPERTY=java.vm.name
       os: osx
-    - <<: *show
+    - <<: *bench
       env: PROPERTY=java.vm.name
-    - <<: *show
+    - <<: *bench
       env: PROPERTY=java.vm.vendor
 
 stages:
   - prepare
-  - compile
-  - show
+  - bundle
+  - benchmark
 
 addons:
   apt:

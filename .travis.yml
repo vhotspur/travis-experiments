@@ -5,11 +5,13 @@ language: java
 refs:
   - &compile
     stage: compile
+    name: Bundling
     script:
       - ant
       - ant example
   - &show
     stage: show
+    name: Demo
     jdk: openjdk8
     script:
       - ant
@@ -17,6 +19,11 @@ refs:
 
 jobs:
   include:
+    - stage: prepare
+      name: "Set-up"
+      script:
+        - ant print-properties
+
     - <<: *compile
       os: osx
     - <<: *compile
@@ -39,6 +46,7 @@ jobs:
       env: PROPERTY=java.vm.vendor
 
 stages:
+  - prepare
   - compile
   - show
 

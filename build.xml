@@ -6,6 +6,10 @@
             description="Default target: create executable JAR."
         >
     </target>
+	
+	<target name="print-properties">
+	        <echoproperties format="text" />
+	</target>
 
     <target name="compile"
             description="Compile application code."

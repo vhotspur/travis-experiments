@@ -19,16 +19,13 @@ jobs:
       jdk: openjdk8
       script:
         - ant
-        - '[ -n "$PROPERTY" ] && java -jar out/jars/app.jar "$PROPERTY"'
+        - 'if [ -n "$PROPERTY" ]; then java -jar out/jars/app.jar "$PROPERTY"; fi'
 
 env:
   - COMPILE_ONLY=true
   - PROPERTY=java.vm.name
   - PROPERTY=java.vm.vendor
 
-matrix:
-  include:
-    - env: COMPILE_ONLY=true
 
 addons:
   apt:
@@ -41,4 +38,4 @@ before_install:
 script:
   - ant
   - ant example
-  - '[ -n "$PROPERTY" ] && java -jar out/jars/app.jar "$PROPERTY"'
+  - 'if [ -n "$PROPERTY" ]; then java -jar out/jars/app.jar "$PROPERTY"; fi'

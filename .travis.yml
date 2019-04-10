@@ -2,12 +2,13 @@ sudo: false
 dist: trusty
 language: java
 
+jdk:
+  - openjdk7
+  - openjdk8
+
 jobs:
   include:
     - stage: compile
-      jdk:
-        - openjdk7
-        - openjdk8
       script:
         - ant
         - ant example

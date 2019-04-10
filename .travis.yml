@@ -2,24 +2,31 @@ sudo: false
 dist: trusty
 language: java
 
-jdk:
-  - openjdk7
-  - openjdk8
-
 jobs:
   include:
-    - stage: compile
-      script:
-        - ant
-        - ant example
-    - stage: show
+
+    - &show
+      stage: show
       jdk: openjdk8
-      env:
-        - PROPERTY=java.vm.name
-        - PROPERTY=java.vm.vendor
       script:
         - ant
         - 'java -jar out/jars/app.jar "$PROPERTY"'
+
+    - &compile
+      stage: compile
+      script:
+        - ant
+        - ant example
+
+    - <<: *compile
+      jdk: openjdk7
+    - <<: *compile
+      jdk: openjdk8
+
+    - <<: *show
+      env: PROPERTY=java.vm.name
+    - <<: *show
+      env: PROPERTY=java.vm.vendor
 
 stages:
   - compile

@@ -16,8 +16,7 @@ refs:
 
 jobs:
   include:
-    - stage: prepare
-      name: "Basic checks"
+    - stage: "Basic checks"
       script:
         - ant print-properties
         - ant example
@@ -44,7 +43,7 @@ jobs:
       env: PROPERTY=java.vm.vendor
 
 stages:
-  - prepare
+  - "Basic checks"
   - bundle
   - benchmark
 

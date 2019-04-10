@@ -7,12 +7,14 @@ refs:
     stage: bundle
     script:
       - ant
-  - &bench
+  - &bench_nojdk
     stage: benchmark
-    jdk: openjdk8
     script:
       - ant
       - 'java -jar out/jars/app.jar "$PROPERTY"'
+  - &bench
+    <<: *bench_nojdk
+    jdk: openjdk8
 
 jobs:
   include:
@@ -34,7 +36,7 @@ jobs:
     - <<: *bundle
       jdk: oraclejdk11
 
-    - <<: *bench
+    - <<: *bench_nojdk
       env: PROPERTY=java.vm.name
       os: osx
     - <<: *bench

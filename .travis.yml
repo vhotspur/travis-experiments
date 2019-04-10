@@ -2,6 +2,13 @@ sudo: false
 dist: trusty
 language: java
 
+refs:
+  - &compile
+    stage: compile
+    script:
+      - ant
+      - ant example
+
 jobs:
   include:
 
@@ -11,12 +18,6 @@ jobs:
       script:
         - ant
         - 'java -jar out/jars/app.jar "$PROPERTY"'
-
-    - &compile
-      stage: compile
-      script:
-        - ant
-        - ant example
 
     - <<: *compile
       jdk: openjdk7

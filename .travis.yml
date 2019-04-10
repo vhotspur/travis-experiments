@@ -4,28 +4,33 @@ language: java
 
 os:
   - linux
-  - osx
+#  - osx
 
 jdk:
-  - oraclejdk8
-  - oraclejdk9
-  - oraclejdk11
+#  - oraclejdk8
+#  - oraclejdk9
+#  - oraclejdk11
   - openjdk7
   - openjdk8
 
 jobs:
   include:
+    - stage: test
+      jdk:
+        - openjdk7
+        - openjdk8
+      script:
+        - ant
+        - ant example
     - stage: show
       jdk: openjdk8
+      env:
+        - COMPILE_ONLY=true
+        - PROPERTY=java.vm.name
+        - PROPERTY=java.vm.vendor
       script:
         - ant
         - 'if [ -n "$PROPERTY" ]; then java -jar out/jars/app.jar "$PROPERTY"; fi'
-
-env:
-  - COMPILE_ONLY=true
-  - PROPERTY=java.vm.name
-  - PROPERTY=java.vm.vendor
-
 
 addons:
   apt:
@@ -34,8 +39,3 @@ addons:
 
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
-
-script:
-  - ant
-  - ant example
-  - 'if [ -n "$PROPERTY" ]; then java -jar out/jars/app.jar "$PROPERTY"; fi'

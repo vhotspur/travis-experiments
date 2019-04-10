@@ -15,7 +15,7 @@ jdk:
 
 jobs:
   include:
-    - stage: test
+    - stage: compile
       jdk:
         - openjdk7
         - openjdk8
@@ -25,12 +25,15 @@ jobs:
     - stage: show
       jdk: openjdk8
       env:
-        - COMPILE_ONLY=true
         - PROPERTY=java.vm.name
         - PROPERTY=java.vm.vendor
       script:
         - ant
-        - 'if [ -n "$PROPERTY" ]; then java -jar out/jars/app.jar "$PROPERTY"; fi'
+        - 'java -jar out/jars/app.jar "$PROPERTY"'
+
+stages:
+  - compile
+  - show
 
 addons:
   apt:

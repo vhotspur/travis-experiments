@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Build file for our project -->
-<project basedir="." name="Word wrapping" default="main">
+<project basedir="." name="Experiment" default="main">
     <target name="main"
             depends="jar"
             description="Default target: create executable JAR."

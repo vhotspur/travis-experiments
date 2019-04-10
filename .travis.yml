@@ -18,10 +18,21 @@ refs:
 jobs:
   include:
     - <<: *compile
+      os: osx
+    - <<: *compile
       jdk: openjdk7
     - <<: *compile
       jdk: openjdk8
+    - <<: *compile
+      jdk: oraclejdk8
+    - <<: *compile
+      jdk: oraclejdk9
+    - <<: *compile
+      jdk: oraclejdk11
 
+    - <<: *show
+      env: PROPERTY=java.vm.name
+      os: osx
     - <<: *show
       env: PROPERTY=java.vm.name
     - <<: *show

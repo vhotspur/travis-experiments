@@ -5,13 +5,11 @@ language: java
 refs:
   - &compile
     stage: compile
-    name: Bundling
     script:
       - ant
       - ant example
   - &show
     stage: show
-    name: Demo
     jdk: openjdk8
     script:
       - ant

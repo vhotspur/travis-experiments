@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build file for our project -->
+<project basedir="." name="Word wrapping" default="main">
+    <target name="main"
+            depends="jar"
+            description="Default target: create executable JAR."
+        >
+    </target>
+
+    <target name="compile"
+            description="Compile application code."
+        >
+        <mkdir dir="out/classes" />
+        <javac
+                destdir="out/classes"
+                debug="true"
+                includeantruntime="false">
+            <src path="src" />
+            <compilerarg value="-Xlint:all"/>
+        </javac>
+    </target>
+    <target name="jar"
+            depends="compile"
+            description="Build application JAR.">
+        <mkdir dir="out/jars" />
+        <jar destfile="out/jars/app.jar">
+            <fileset dir="out/classes" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main-Class" value="Experiment" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="example"
+            depends="jar"
+            description="Example execution.">
+        <java jar="out/jars/app.jar" fork="true" input="LICENSE" />
+    </target>
+
+    <target name="clean"
+            description="Remove generated files."
+        >
+        <delete dir="out" />
+    </target>
+</project>

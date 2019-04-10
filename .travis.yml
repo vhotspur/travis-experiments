@@ -8,17 +8,15 @@ refs:
     script:
       - ant
       - ant example
+  - &show
+    stage: show
+    jdk: openjdk8
+    script:
+      - ant
+      - 'java -jar out/jars/app.jar "$PROPERTY"'
 
 jobs:
   include:
-
-    - &show
-      stage: show
-      jdk: openjdk8
-      script:
-        - ant
-        - 'java -jar out/jars/app.jar "$PROPERTY"'
-
     - <<: *compile
       jdk: openjdk7
     - <<: *compile

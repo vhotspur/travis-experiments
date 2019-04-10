@@ -1,0 +1,44 @@
+sudo: false
+dist: trusty
+language: java
+
+os:
+  - linux
+  - osx
+
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+  - oraclejdk11
+  - openjdk7
+  - openjdk8
+
+jobs:
+  include:
+    - stage: show
+      jdk: openjdk8
+      script:
+        - ant
+        - '[ -n "$PROPERTY" ] && java -jar out/jars/app.jar "$PROPERTY"'
+
+env:
+  - COMPILE_ONLY=true
+  - PROPERTY=java.vm.name
+  - PROPERTY=java.vm.vendor
+
+matrix:
+  include:
+    - env: COMPILE_ONLY=true
+
+addons:
+  apt:
+    packages:
+      - ant-optional
+
+before_install:
+  - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
+
+script:
+  - ant
+  - ant example
+  - '[ -n "$PROPERTY" ] && java -jar out/jars/app.jar "$PROPERTY"'

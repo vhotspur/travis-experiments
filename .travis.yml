@@ -7,14 +7,13 @@ refs:
     stage: bundle
     script:
       - ant
-  - &bench_nojdk
+
+  - &bench
     stage: benchmark
     script:
       - ant
-      - 'java -jar out/jars/app.jar "$PROPERTY"'
-  - &bench
-    <<: *bench_nojdk
-    jdk: openjdk8
+      - java -jar out/jars/app.jar --list >list.txt
+      - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP"'
 
 jobs:
   include:
@@ -36,13 +35,16 @@ jobs:
     - <<: *bundle
       jdk: oraclejdk11
 
-    - <<: *bench_nojdk
-      env: PROPERTY=java.vm.name
+    - <<: *bench
       os: osx
     - <<: *bench
-      env: PROPERTY=java.vm.name
+      jdk: openjdk8
     - <<: *bench
-      env: PROPERTY=java.vm.vendor
+      jdk: oraclejdk11
+    - <<: *bench
+      os: osx
+    - <<: *bench
+      os: windows
 
 stages:
   - "Basic checks"
@@ -56,3 +58,4 @@ addons:
 
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
+  - 'if [ "$TRAVIS_OS_NAME" == "window" ]; then choco install openjdk ant; fi'

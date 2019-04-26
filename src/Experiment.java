@@ -9,6 +9,9 @@ public class Experiment {
     public static void main(String args[]) {
         if (args.length == 0) {
             printAll();
+        } else if (args[0].equals("--list")) {
+            System.out.println("java.vm.name");
+            System.out.println("java.vm.vendor");
         } else {
             System.out.println(System.getProperty(args[0], ""));
         }

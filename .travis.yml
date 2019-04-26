@@ -1,6 +1,6 @@
+language: java
 sudo: false
 dist: trusty
-language: java
 
 refs:
   - &bundle
@@ -13,7 +13,7 @@ refs:
     script:
       - ant
       - java -jar out/jars/app.jar --list >list.txt
-      - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP"'
+      - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP"; done'
 
 jobs:
   include:
@@ -22,8 +22,8 @@ jobs:
         - ant print-properties
         - ant example
 
-    - <<: *bundle
-      os: osx
+#    - <<: *bundle
+#      os: osx
     - <<: *bundle
       jdk: openjdk7
     - <<: *bundle
@@ -35,16 +35,15 @@ jobs:
     - <<: *bundle
       jdk: oraclejdk11
 
-    - <<: *bench
-      os: osx
+#    - <<: *bench
+#      os: osx
     - <<: *bench
       jdk: openjdk8
     - <<: *bench
       jdk: oraclejdk11
     - <<: *bench
-      os: osx
-    - <<: *bench
       os: windows
+      language: shell
 
 stages:
   - "Basic checks"
@@ -58,4 +57,4 @@ addons:
 
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
-  - 'if [ "$TRAVIS_OS_NAME" == "window" ]; then choco install openjdk ant; fi'
+  - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install openjdk ant; fi'

@@ -13,7 +13,7 @@ refs:
     script:
       - ant
       - java -jar out/jars/app.jar --list >list.txt
-      - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP"; done'
+      - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP" || exit 1; done'
 
 jobs:
   include:
@@ -57,4 +57,4 @@ addons:
 
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
-  - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install openjdk ant; fi'
+  - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install jdk8 ant; fi'

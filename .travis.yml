@@ -30,23 +30,23 @@ jobs:
 
 #    - <<: *bundle
 #      os: osx
-    - <<: *bundle
-      jdk: openjdk7
-    - <<: *bundle
-      jdk: openjdk8
-    - <<: *bundle
-      jdk: oraclejdk8
-    - <<: *bundle
-      jdk: oraclejdk9
-    - <<: *bundle
-      jdk: oraclejdk11
+#    - <<: *bundle
+#      jdk: openjdk7
+#    - <<: *bundle
+#      jdk: openjdk8
+#    - <<: *bundle
+#      jdk: oraclejdk8
+#    - <<: *bundle
+#      jdk: oraclejdk9
+#    - <<: *bundle
+#      jdk: oraclejdk11
 
 #    - <<: *bench
 #      os: osx
-    - <<: *bench
-      jdk: openjdk8
-    - <<: *bench
-      jdk: oraclejdk11
+#    - <<: *bench
+#      jdk: openjdk8
+#    - <<: *bench
+#      jdk: oraclejdk11
     - <<: *bench
       os: windows
       language: shell
@@ -63,4 +63,4 @@ addons:
 
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
-  - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install jre8 jdk8 ant --ignore-dependencies; fi'
+  - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install jre8 jdk8 ant --ignore-dependencies --install-arguments="/l*v c:/jre8_msi_install.log"'; cat c:/jre8_msi_install.log; fi'

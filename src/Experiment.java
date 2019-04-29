@@ -3,7 +3,7 @@ import java.io.PrintStream;
 import java.util.Map;
 
 public class Experiment {
-    private static final String VERSION = "0.1";
+    private static final String VERSION = "0.2";
 
     private static final String[] INTERESTING_PREFIXES = new String[] {
         "java.vm.",

@@ -18,9 +18,15 @@ refs:
 jobs:
   include:
     - stage: "Basic checks"
+      name: "Print properties"
       script:
         - ant print-properties
         - ant example
+    - stage: "Basic checks"
+      name: "version.txt is up to date"
+      script:
+        - ant
+        - java -jar out/jars/app.jar --update-version && git diff-index --quiet HEAD version.txt
 
 #    - <<: *bundle
 #      os: osx

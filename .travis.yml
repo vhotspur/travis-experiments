@@ -7,11 +7,16 @@ refs:
     stage: bundle
     script:
       - ant
+      - 'mkdir -p "$HOME/.prebuilt"'
+      - 'ls "$HOME/.prebuilt"'
+      - 'rm -rf "$HOME/.prebuilt"/*.jar'
+      - 'cp out/jars/app.jar "$HOME/.prebuilt/"`git rev-parse HEAD`.jar'
 
   - &bench
     stage: benchmark
     script:
-      - ant
+      - mkdir -p out/jars/
+      - CACHED_JAR_NAME="$HOME/.prebuilt/"`git rev-parse HEAD`.jar; if [ -e "$CACHED_JAR_NAME" ]; then cp "$CACHED_JAR_NAME" out/jars/app.jar; else ant; fi
       - java -jar out/jars/app.jar --list >list.txt
       - 'for PROP in `cat list.txt`; do java -jar out/jars/app.jar "$PROP" || exit 1; done'
 
@@ -38,15 +43,15 @@ jobs:
 #      jdk: oraclejdk8
 #    - <<: *bundle
 #      jdk: oraclejdk9
-#    - <<: *bundle
-#      jdk: oraclejdk11
+    - <<: *bundle
+      jdk: oraclejdk11
 
 #    - <<: *bench
 #      os: osx
 #    - <<: *bench
 #      jdk: openjdk8
-#    - <<: *bench
-#      jdk: oraclejdk11
+    - <<: *bench
+      jdk: oraclejdk11
 #    - <<: *bench
 #      os: windows
 #      language: shell
@@ -64,3 +69,7 @@ addons:
 before_install:
   - 'if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi'
   - 'if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install jre8 --install-arguments="/l*v c:/jre8_msi_install.log"; cat c:/jre8_msi_install.log; fi'
+
+cache:
+  directories:
+    - $HOME/.prebuilt/

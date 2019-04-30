@@ -47,9 +47,9 @@ jobs:
 #      jdk: openjdk8
 #    - <<: *bench
 #      jdk: oraclejdk11
-    - <<: *bench
-      os: windows
-      language: shell
+#    - <<: *bench
+#      os: windows
+#      language: shell
 
 stages:
   - "Basic checks"

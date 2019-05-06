@@ -28,6 +28,13 @@ jobs:
         - ant print-properties
         - ant example
     - stage: "Basic checks"
+      name: "System info"
+      script:
+        - uname -a
+        - lscpu
+        - free -h
+        - df -h
+    - stage: "Basic checks"
       name: "version.txt is up to date"
       script:
         - ant

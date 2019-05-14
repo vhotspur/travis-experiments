@@ -84,8 +84,8 @@ before_install:
 
 before_script:
   - "# Install custom JDK if needed"
-  - 'if [ -n "$USE_JDK" ]; then wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x install-jdk.sh; fi'
-  - 'if [ -n "$USE_JDK" ]; then export JAVA_HOME=$HOME/$USE_JDK"; fi'
+  - 'if [ -n "$USE_JDK" ]; then wget "https://github.com/sormuras/bach/raw/master/install-jdk.sh" && chmod +x install-jdk.sh; fi'
+  - 'if [ -n "$USE_JDK" ]; then export JAVA_HOME="$HOME/$USE_JDK"; fi'
   - 'if [ "$USE_JDK" = "OpenJ9" ]; then ./install-jdk.sh --url "https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=openj9&os=linux&arch=x64&release=latest&heap_size=normal&type=jdk" --target "$JAVA_HOME"; fi'
   - 'if [ -n "$USE_JDK" ]; then export PATH="$JAVA_HOME/bin:$PATH"; fi'
 

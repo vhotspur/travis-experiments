@@ -6,6 +6,8 @@ refs:
   - &bundle
     stage: bundle
     script:
+      - java -version
+      - javac -version
       - ant
       - 'mkdir -p "$HOME/.prebuilt"'
       - 'ls "$HOME/.prebuilt"'
@@ -52,6 +54,9 @@ jobs:
 #      jdk: oraclejdk9
     - <<: *bundle
       jdk: oraclejdk11
+    - <<: *bundle
+      before_script:
+        - "$TRAVIS_BUILD_DIR/install-jdk.sh --url 'https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=openj9&os=linux&arch=x64&release=latest&heap_size=normal&type=jdk'"
 
 #    - <<: *bench
 #      os: osx

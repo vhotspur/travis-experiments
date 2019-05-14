@@ -58,7 +58,9 @@ jobs:
       before_script:
         - "wget https://github.com/sormuras/bach/raw/master/install-jdk.sh"
         - "chmod +x install-jdk.sh"
-        - "./install-jdk.sh --url 'https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=openj9&os=linux&arch=x64&release=latest&heap_size=normal&type=jdk'"
+        - "export JAVA_HOME=$HOME/openj9"
+        - "./install-jdk.sh --url 'https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=openj9&os=linux&arch=x64&release=latest&heap_size=normal&type=jdk' --target $JAVA_HOME"
+        - "export PATH=$JAVA_HOME/bin:$PATH"
 
 #    - <<: *bench
 #      os: osx

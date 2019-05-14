@@ -17,6 +17,7 @@ refs:
   - &bench
     stage: benchmark
     script:
+      - java -version
       - mkdir -p out/jars/
       - CACHED_JAR_NAME="$HOME/.prebuilt/"`git rev-parse HEAD`.jar; if [ -e "$CACHED_JAR_NAME" ]; then cp "$CACHED_JAR_NAME" out/jars/app.jar; else ant; fi
       - java -jar out/jars/app.jar --list >list.txt
@@ -64,6 +65,9 @@ jobs:
 #      jdk: openjdk8
     - <<: *bench
       jdk: oraclejdk11
+    - <<: *bench
+      env:
+        - USE_JDK=OpenJ9
 #    - <<: *bench
 #      os: windows
 #      language: shell
